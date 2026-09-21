@@ -1,0 +1,31 @@
+name: Update Recent Activity
+
+on:
+  schedule:
+    - cron: '0 */12 * * *' # Se ejecuta cada 12 horas
+  workflow_dispatch: # Permite ejecutarlo manualmente desde la pestaña Actions
+
+# Permisos explícitos necesarios para que la acción pueda leer y escribir en el repositorio
+permissions:
+  contents: write
+
+env:
+  # Forzar el uso seguro de Node 20 para evitar el error de "undefined commit(s)"
+  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Update Recent Activity
+        uses: Readme-Workflows/recent-activity@v2.4.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          # Forzamos a la acción a buscar el archivo en la raíz exacta del contenedor
+          README_FILE: './README.md'
+          # Desactivamos temporalmente la búsqueda del archivo config externo para evitar el error ENOENT
+          CONFIG_FILE: '' 
