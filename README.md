@@ -9,3 +9,6 @@
 ### Vias de contacto
 
 ![Website]()
+
+<!--RECENT_ACTIVITY:start-->
+<!--RECENT_ACTIVITY:end-->
